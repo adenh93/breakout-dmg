@@ -1,8 +1,7 @@
 use crate::{
     components::{Brick, BrickVariant, CornerLocation, Wall, WallLocation},
     constants::{
-        BRICK_AREA_TOP_LEFT, BRICK_COUNT_HORIZONTAL, BRICK_SIZE, DEBUG_LEVEL, DMG_HEIGHT,
-        DMG_WIDTH, WALL_TILE_COUNT_HORIZONTAL, WALL_TILE_COUNT_VERTICAL,
+        BRICK_AREA_TOP_LEFT, BRICK_COUNT_HORIZONTAL, BRICK_SIZE, DEBUG_LEVEL, DMG_HEIGHT, DMG_WIDTH,
     },
 };
 use bevy::prelude::*;
@@ -21,18 +20,9 @@ pub fn setup_camera(mut commands: Commands) {
 }
 
 pub fn spawn_walls(mut commands: Commands, asset_server: Res<AssetServer>) {
-    // spawn left/right walls
-    for offset in 1..=WALL_TILE_COUNT_VERTICAL {
-        commands.spawn(Wall::with_collision(
-            WallLocation::Left(offset as f32),
-            &asset_server,
-        ));
-
-        commands.spawn(Wall::with_collision(
-            WallLocation::Right(offset as f32),
-            &asset_server,
-        ));
-    }
+    // spawn left/right wall
+    commands.spawn(Wall::with_collision(WallLocation::Left, &asset_server));
+    commands.spawn(Wall::with_collision(WallLocation::Right, &asset_server));
 
     // spawn top-left corner wall
     commands.spawn(Wall::new(
@@ -46,13 +36,8 @@ pub fn spawn_walls(mut commands: Commands, asset_server: Res<AssetServer>) {
         &asset_server,
     ));
 
-    // spawn top walls
-    for offset in 1..=WALL_TILE_COUNT_HORIZONTAL {
-        commands.spawn(Wall::with_collision(
-            WallLocation::Top(offset as f32),
-            &asset_server,
-        ));
-    }
+    // spawn top wall
+    commands.spawn(Wall::with_collision(WallLocation::Top, &asset_server));
 }
 
 pub fn spawn_bricks(mut commands: Commands, asset_server: Res<AssetServer>) {

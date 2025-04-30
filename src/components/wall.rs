@@ -1,7 +1,8 @@
 use super::Collider;
 use crate::constants::{
-    RADIAN_90_DEGREES, WALL_CORNER_SPRITE_PATH, WALL_SPRITE_PATH, WALL_TILE_SIZE, WALLS_BOTTOM,
-    WALLS_LEFT, WALLS_RIGHT, WALLS_TOP,
+    RADIAN_90_DEGREES, WALL_CORNER_SPRITE_PATH, WALL_LENGTH_HORIZONTAL, WALL_LENGTH_VERTICAL,
+    WALL_LOCATION_LEFT, WALL_LOCATION_RIGHT, WALL_LOCATION_TOP, WALL_LOCATION_TOP_LEFT_CORNER,
+    WALL_LOCATION_TOP_RIGHT_CORNER, WALL_SPRITE_PATH, WALL_TILE_SIZE,
 };
 use bevy::prelude::*;
 
@@ -13,8 +14,8 @@ pub enum CornerLocation {
 impl CornerLocation {
     fn position(&self) -> Vec2 {
         match self {
-            Self::TopLeft => Vec2::new(WALLS_LEFT, WALLS_TOP),
-            Self::TopRight => Vec2::new(WALLS_RIGHT, WALLS_TOP),
+            Self::TopLeft => WALL_LOCATION_TOP_LEFT_CORNER,
+            Self::TopRight => WALL_LOCATION_TOP_RIGHT_CORNER,
         }
     }
 
@@ -27,18 +28,18 @@ impl CornerLocation {
 }
 
 pub enum WallLocation {
-    Left(f32 /*offset*/),
-    Right(f32 /*offset*/),
-    Top(f32 /*offset*/),
+    Left,
+    Right,
+    Top,
     Corner(CornerLocation),
 }
 
 impl WallLocation {
     fn position(&self) -> Vec2 {
         match self {
-            Self::Left(offset) => Vec2::new(WALLS_LEFT, WALLS_BOTTOM + offset * WALL_TILE_SIZE),
-            Self::Right(offset) => Vec2::new(WALLS_RIGHT, WALLS_BOTTOM + offset * WALL_TILE_SIZE),
-            Self::Top(offset) => Vec2::new(WALLS_LEFT + offset * WALL_TILE_SIZE, WALLS_TOP),
+            Self::Left => WALL_LOCATION_LEFT,
+            Self::Right => WALL_LOCATION_RIGHT,
+            Self::Top => WALL_LOCATION_TOP,
             Self::Corner(location) => location.position(),
         }
     }
@@ -52,15 +53,23 @@ impl WallLocation {
 
     fn rotation(&self) -> Quat {
         match self {
-            Self::Top(_) => Quat::from_rotation_z(RADIAN_90_DEGREES),
+            Self::Top => Quat::from_rotation_z(RADIAN_90_DEGREES),
             _ => Quat::default(),
+        }
+    }
+
+    fn size(&self) -> Vec2 {
+        match self {
+            Self::Left | Self::Right => Vec2::new(WALL_TILE_SIZE, WALL_LENGTH_VERTICAL),
+            Self::Top => Vec2::new(WALL_TILE_SIZE, WALL_LENGTH_HORIZONTAL),
+            _ => Vec2::new(WALL_TILE_SIZE, WALL_TILE_SIZE),
         }
     }
 
     fn flip_x(&self) -> bool {
         match self {
-            Self::Left(_) | Self::Top(_) => false,
-            Self::Right(_) => true,
+            Self::Left | Self::Top => false,
+            Self::Right => true,
             Self::Corner(location) => location.flip_x(),
         }
     }
@@ -75,14 +84,23 @@ impl Wall {
         location: WallLocation,
         asset_server: &Res<AssetServer>,
     ) -> (Wall, Sprite, Transform) {
+        let image_mode = SpriteImageMode::Tiled {
+            tile_x: false,
+            tile_y: true,
+            stretch_value: 1.,
+        };
+
         let sprite = Sprite {
             image: asset_server.load(location.asset_path()),
             flip_x: location.flip_x(),
+            custom_size: Some(Vec2::ONE),
+            image_mode,
             ..default()
         };
 
         let transform = Transform::from_translation(location.position().extend(0.))
-            .with_rotation(location.rotation());
+            .with_rotation(location.rotation())
+            .with_scale(location.size().extend(1.));
 
         (Wall, sprite, transform)
     }
