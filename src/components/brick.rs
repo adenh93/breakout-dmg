@@ -1,5 +1,5 @@
 use super::Collider;
-use crate::constants::{BRICK_MULTIHIT_SPRITE_PATH, BRICK_NORMAL_SPRITE_PATH};
+use crate::constants::*;
 use bevy::prelude::*;
 
 const NORMAL: u8 = 1;

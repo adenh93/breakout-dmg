@@ -3,7 +3,7 @@ mod constants;
 mod systems;
 
 use bevy::{prelude::*, window::WindowResolution};
-use constants::{DMG_COLOR_0, DMG_HEIGHT, DMG_WIDTH, RESOLUTION_SCALE};
+use constants::*;
 use systems::startup::{setup_camera, spawn_bricks, spawn_walls};
 
 fn get_scaled_window() -> Window {
