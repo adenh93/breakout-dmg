@@ -4,8 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+anyhow = "1.0.98"
 bevy = { version = "0.16.0", features = ["dynamic_linking"] }
 bevy_dylib = "0.16.0"
+serde = { version = "1.0.219", features = ["derive"] }
+toml = "0.8.22"
 
 # Enable a small amount of optimization in the dev profile.
 [profile.dev]
