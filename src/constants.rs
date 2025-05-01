@@ -33,6 +33,9 @@ pub const SCREEN_RIGHT: f32 = DMG_WIDTH / 2.;
 /// The farthest left point of the viewable screen.
 pub const SCREEN_LEFT: f32 = -SCREEN_RIGHT;
 
+/// The farthest bottom point of the viewable screen.
+pub const SCREEN_BOTTOM: f32 = -SCREEN_TOP;
+
 /// The length and width of a wall tile.
 pub const WALL_TILE_SIZE: f32 = 8.;
 
@@ -51,25 +54,25 @@ pub const WALL_LENGTH_VERTICAL: f32 = WALL_TILE_COUNT_VERTICAL as f32 * WALL_TIL
 /// The total length in logical units of the top wall.
 pub const WALL_LENGTH_HORIZONTAL: f32 = WALL_TILE_COUNT_HORIZONTAL as f32 * WALL_TILE_SIZE;
 
-/// The total length of the top wall including the first corner wall, used for
+/// The total length of the top wall including the corner walls, used for
 /// positioning logic.
-pub const WALL_LENGTH_HORIZONTAL_WITH_CORNER: f32 = WALL_LENGTH_HORIZONTAL + WALL_TILE_SIZE;
+pub const WALL_LENGTH_HORIZONTAL_WITH_CORNERS: f32 = WALL_LENGTH_HORIZONTAL + WALL_TILE_SIZE * 2.;
 
 /// The calculated center point to spawn the left/right walls.
 pub const WALL_LOCATION_CENTER: f32 = -WALL_TILE_SIZE + HALF_WALL_TILE;
 
+/// The center of the playable area.
+pub const PLAY_AREA_CENTER: f32 = SCREEN_LEFT + WALL_LENGTH_HORIZONTAL_WITH_CORNERS / 2.;
+
 /// The calculated point to spawn the top wall.
-pub const WALL_LOCATION_TOP: Vec2 = Vec2::new(
-    SCREEN_LEFT + HALF_WALL_TILE + WALL_LENGTH_HORIZONTAL_WITH_CORNER / 2.,
-    SCREEN_TOP - HALF_WALL_TILE,
-);
+pub const WALL_LOCATION_TOP: Vec2 = Vec2::new(PLAY_AREA_CENTER, SCREEN_TOP - HALF_WALL_TILE);
 
 /// The calculated point to spawn the left wall.
 pub const WALL_LOCATION_LEFT: Vec2 = Vec2::new(SCREEN_LEFT + HALF_WALL_TILE, WALL_LOCATION_CENTER);
 
 /// The calculated point to spawn the right wall.
 pub const WALL_LOCATION_RIGHT: Vec2 = Vec2::new(
-    SCREEN_LEFT + WALL_LENGTH_HORIZONTAL_WITH_CORNER + HALF_WALL_TILE,
+    SCREEN_LEFT + WALL_LENGTH_HORIZONTAL_WITH_CORNERS - HALF_WALL_TILE,
     WALL_LOCATION_CENTER,
 );
 
@@ -96,6 +99,9 @@ pub const BRICK_NORMAL_SPRITE_PATH: &str = "sprites/brick-normal.png";
 /// Assets directory path for the multihit brick sprite.
 pub const BRICK_MULTIHIT_SPRITE_PATH: &str = "sprites/brick-multihit.png";
 
+/// Assets directory path for the paddle sprite.
+pub const PADDLE_SPRITE_PATH: &str = "sprites/paddle.png";
+
 /// The length and width of a breakable brick.
 pub const BRICK_SIZE: Vec2 = Vec2::new(8., 4.);
 
@@ -112,6 +118,18 @@ pub const BRICK_COUNT_TOTAL: usize = BRICK_ROW_COUNT * BRICK_COLUMN_COUNT;
 pub const BRICK_SPAWN_LOCATION: Vec2 = Vec2::new(
     SCREEN_LEFT + WALL_TILE_SIZE + BRICK_SIZE.x / 2.,
     SCREEN_TOP - WALL_TILE_SIZE - BRICK_SIZE.y / 2.,
+);
+
+/// The length and width of the player paddle.
+pub const PADDLE_SIZE: Vec2 = Vec2::new(26., 5.);
+
+/// The amount of space between the paddle and the bottom of the screen
+pub const PADDLE_BOTTOM_PADDING: f32 = 8.;
+
+/// The starting position of the player paddle.
+pub const PADDLE_STARTING_POSITION: Vec2 = Vec2::new(
+    PLAY_AREA_CENTER,
+    SCREEN_BOTTOM + PADDLE_BOTTOM_PADDING + PADDLE_SIZE.y / 2.,
 );
 
 /// Hardcoded tilesheet representing a basic debug level used

@@ -1,5 +1,5 @@
 use crate::{
-    components::{Brick, BrickVariant, CornerLocation, Wall, WallLocation},
+    components::{Brick, BrickVariant, CornerLocation, Paddle, Wall, WallLocation},
     constants::*,
 };
 use bevy::prelude::*;
@@ -51,4 +51,8 @@ pub fn spawn_bricks(mut commands: Commands, asset_server: Res<AssetServer>) {
             commands.spawn(Brick::new(variant, position, &asset_server));
         }
     }
+}
+
+pub fn spawn_paddle(mut commands: Commands, asset_server: Res<AssetServer>) {
+    commands.spawn(Paddle::new(&asset_server));
 }

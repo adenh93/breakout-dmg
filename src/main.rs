@@ -4,7 +4,7 @@ mod systems;
 
 use bevy::{prelude::*, window::WindowResolution};
 use constants::*;
-use systems::startup::{setup_camera, spawn_bricks, spawn_walls};
+use systems::startup::{setup_camera, spawn_bricks, spawn_paddle, spawn_walls};
 
 fn get_scaled_window() -> Window {
     let scaled_width = DMG_WIDTH * RESOLUTION_SCALE;
@@ -30,6 +30,9 @@ fn main() {
                 .set(ImagePlugin::default_nearest()),
         )
         .insert_resource(ClearColor(DMG_COLOR_0))
-        .add_systems(Startup, (setup_camera, spawn_walls, spawn_bricks))
+        .add_systems(
+            Startup,
+            (setup_camera, spawn_walls, spawn_bricks, spawn_paddle),
+        )
         .run();
 }
