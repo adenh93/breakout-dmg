@@ -1,6 +1,9 @@
 use bevy::prelude::*;
 use std::f32::consts::PI;
 
+/// Path to a TOML file containing defined keybindings.
+pub const KEYBINDINGS_PATH: &str = "keybindings.toml";
+
 /// The pre-scaled width of the game window.
 pub const DMG_WIDTH: f32 = 160.;
 

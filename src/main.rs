@@ -1,9 +1,11 @@
 mod components;
 mod constants;
+mod resources;
 mod systems;
 
 use bevy::{prelude::*, window::WindowResolution};
 use constants::*;
+use resources::Keybindings;
 use systems::startup::{setup_camera, spawn_bricks, spawn_paddle, spawn_walls};
 
 fn get_scaled_window() -> Window {
@@ -23,6 +25,11 @@ fn main() {
         ..default()
     };
 
+    let keybindings = Keybindings::load(KEYBINDINGS_PATH).unwrap_or_else(|err| {
+        warn!("Couldn't load keybindings. Falling back to defaults. {err:?}");
+        Keybindings::default()
+    });
+
     App::new()
         .add_plugins(
             DefaultPlugins
@@ -30,6 +37,7 @@ fn main() {
                 .set(ImagePlugin::default_nearest()),
         )
         .insert_resource(ClearColor(DMG_COLOR_0))
+        .insert_resource(keybindings)
         .add_systems(
             Startup,
             (setup_camera, spawn_walls, spawn_bricks, spawn_paddle),

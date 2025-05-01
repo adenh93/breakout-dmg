@@ -1,0 +1,3 @@
+"move_left" = ["ArrowLeft", "KeyA"]
+"move_right" = ["ArrowRight", "KeyD"]
+"serve" = ["Space", "KeyW", "ArrowUp"]
