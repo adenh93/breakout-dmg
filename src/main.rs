@@ -6,18 +6,10 @@ mod systems;
 use bevy::{prelude::*, window::WindowResolution};
 use constants::*;
 use resources::Keybindings;
-use systems::startup::{setup_camera, spawn_bricks, spawn_paddle, spawn_walls};
-
-fn get_scaled_window() -> Window {
-    let scaled_width = DMG_WIDTH * RESOLUTION_SCALE;
-    let scaled_height = DMG_HEIGHT * RESOLUTION_SCALE;
-
-    Window {
-        resolution: WindowResolution::new(scaled_width, scaled_height),
-        resizable: false,
-        ..default()
-    }
-}
+use systems::{
+    fixed_update::handle_input,
+    startup::{setup_camera, spawn_bricks, spawn_paddle, spawn_walls},
+};
 
 fn main() {
     let window_plugin = WindowPlugin {
@@ -42,5 +34,17 @@ fn main() {
             Startup,
             (setup_camera, spawn_walls, spawn_bricks, spawn_paddle),
         )
+        .add_systems(FixedUpdate, handle_input)
         .run();
+}
+
+fn get_scaled_window() -> Window {
+    let scaled_width = DMG_WIDTH * RESOLUTION_SCALE;
+    let scaled_height = DMG_HEIGHT * RESOLUTION_SCALE;
+
+    Window {
+        resolution: WindowResolution::new(scaled_width, scaled_height),
+        resizable: false,
+        ..default()
+    }
 }

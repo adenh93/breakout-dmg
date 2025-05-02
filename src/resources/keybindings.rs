@@ -4,9 +4,9 @@ use std::path::Path;
 
 #[derive(Resource, Deserialize)]
 pub struct Keybindings {
-    move_left: Vec<KeyCode>,
-    move_right: Vec<KeyCode>,
-    serve: Vec<KeyCode>,
+    pub move_left: Vec<KeyCode>,
+    pub move_right: Vec<KeyCode>,
+    pub serve: Vec<KeyCode>,
 }
 
 impl Default for Keybindings {

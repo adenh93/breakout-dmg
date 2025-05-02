@@ -135,6 +135,15 @@ pub const PADDLE_STARTING_POSITION: Vec2 = Vec2::new(
     SCREEN_BOTTOM + PADDLE_BOTTOM_PADDING + PADDLE_SIZE.y / 2.,
 );
 
+/// The movement speed of the player paddle.
+pub const PADDLE_SPEED: f32 = 80.0;
+
+/// Left-most constraint for the paddle's movement.
+pub const PADDLE_LEFT_BOUND: f32 = WALL_LOCATION_LEFT.x + HALF_WALL_TILE + PADDLE_SIZE.x / 2.;
+
+/// Right-most constraint for the paddle's movement.
+pub const PADDLE_RIGHT_BOUND: f32 = WALL_LOCATION_RIGHT.x - HALF_WALL_TILE - PADDLE_SIZE.x / 2.;
+
 /// Hardcoded tilesheet representing a basic debug level used
 /// for testing game mechanics. This level is not loaded during
 /// typical gameplay.

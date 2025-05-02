@@ -3,6 +3,7 @@ use crate::constants::*;
 use bevy::prelude::*;
 
 #[derive(Component)]
+#[require(Sprite, Transform, Collider)]
 pub struct Paddle;
 
 impl Paddle {
@@ -13,8 +14,8 @@ impl Paddle {
             ..default()
         };
 
-        let transform = Transform::from_translation(PADDLE_STARTING_POSITION.extend(1.))
-            .with_scale(PADDLE_SIZE.extend(0.));
+        let transform = Transform::from_translation(PADDLE_STARTING_POSITION.extend(0.))
+            .with_scale(PADDLE_SIZE.extend(1.));
 
         (Paddle, sprite, transform, Collider)
     }
