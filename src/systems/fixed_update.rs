@@ -1,3 +1,4 @@
+use crate::components::{Ball, Velocity};
 use crate::constants::*;
 use crate::{components::Paddle, resources::Keybindings};
 use bevy::prelude::*;
@@ -26,4 +27,10 @@ pub fn handle_input(
         transform.translation.x + new_direction * PADDLE_SPEED * time.delta_secs();
 
     transform.translation.x = new_paddle_position.clamp(PADDLE_LEFT_BOUND, PADDLE_RIGHT_BOUND);
+}
+
+pub fn ball_movement(ball: Single<(&mut Transform, &Velocity), With<Ball>>, time: Res<Time>) {
+    let (mut transform, velocity) = ball.into_inner();
+    transform.translation.x += velocity.0.x * time.delta_secs();
+    transform.translation.y += velocity.0.y * time.delta_secs();
 }

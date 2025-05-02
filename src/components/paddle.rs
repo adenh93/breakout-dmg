@@ -14,7 +14,7 @@ impl Paddle {
             ..default()
         };
 
-        let transform = Transform::from_translation(PADDLE_STARTING_POSITION.extend(0.))
+        let transform = Transform::from_translation(PADDLE_START_POSITION.extend(0.))
             .with_scale(PADDLE_SIZE.extend(1.));
 
         (Paddle, sprite, transform, Collider)

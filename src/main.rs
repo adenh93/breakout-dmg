@@ -7,8 +7,8 @@ use bevy::{prelude::*, window::WindowResolution};
 use constants::*;
 use resources::Keybindings;
 use systems::{
-    fixed_update::handle_input,
-    startup::{setup_camera, spawn_bricks, spawn_paddle, spawn_walls},
+    fixed_update::{ball_movement, handle_input},
+    startup::{setup_camera, spawn_ball, spawn_bricks, spawn_paddle, spawn_walls},
 };
 
 fn main() {
@@ -32,9 +32,15 @@ fn main() {
         .insert_resource(keybindings)
         .add_systems(
             Startup,
-            (setup_camera, spawn_walls, spawn_bricks, spawn_paddle),
+            (
+                setup_camera,
+                spawn_walls,
+                spawn_bricks,
+                spawn_paddle,
+                spawn_ball,
+            ),
         )
-        .add_systems(FixedUpdate, handle_input)
+        .add_systems(FixedUpdate, (handle_input, ball_movement).chain())
         .run();
 }
 

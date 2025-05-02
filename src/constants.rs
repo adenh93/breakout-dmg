@@ -105,6 +105,9 @@ pub const BRICK_MULTIHIT_SPRITE_PATH: &str = "sprites/brick-multihit.png";
 /// Assets directory path for the paddle sprite.
 pub const PADDLE_SPRITE_PATH: &str = "sprites/paddle.png";
 
+/// Assets directory path for the ball sprite.
+pub const BALL_SPRITE_PATH: &str = "sprites/ball.png";
+
 /// The length and width of a breakable brick.
 pub const BRICK_SIZE: Vec2 = Vec2::new(8., 4.);
 
@@ -130,19 +133,31 @@ pub const PADDLE_SIZE: Vec2 = Vec2::new(26., 5.);
 pub const PADDLE_BOTTOM_PADDING: f32 = 8.;
 
 /// The starting position of the player paddle.
-pub const PADDLE_STARTING_POSITION: Vec2 = Vec2::new(
+pub const PADDLE_START_POSITION: Vec2 = Vec2::new(
     PLAY_AREA_CENTER,
     SCREEN_BOTTOM + PADDLE_BOTTOM_PADDING + PADDLE_SIZE.y / 2.,
 );
-
-/// The movement speed of the player paddle.
-pub const PADDLE_SPEED: f32 = 80.0;
 
 /// Left-most constraint for the paddle's movement.
 pub const PADDLE_LEFT_BOUND: f32 = WALL_LOCATION_LEFT.x + HALF_WALL_TILE + PADDLE_SIZE.x / 2.;
 
 /// Right-most constraint for the paddle's movement.
 pub const PADDLE_RIGHT_BOUND: f32 = WALL_LOCATION_RIGHT.x - HALF_WALL_TILE - PADDLE_SIZE.x / 2.;
+
+/// The movement speed of the player paddle.
+pub const PADDLE_SPEED: f32 = 80.0;
+
+/// The movement speed of the ball.
+pub const BALL_SPEED: f32 = 50.0;
+
+/// The width and length of the ball.
+pub const BALL_SIZE: f32 = 4.;
+
+/// The starting position for the ball.
+pub const BALL_START_POSITION: Vec2 = Vec2::new(
+    PADDLE_START_POSITION.x,
+    PADDLE_START_POSITION.y + PADDLE_SIZE.y / 2.,
+);
 
 /// Hardcoded tilesheet representing a basic debug level used
 /// for testing game mechanics. This level is not loaded during
