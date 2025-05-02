@@ -39,10 +39,13 @@ impl Brick {
     ) -> (Brick, Sprite, Transform, Collider) {
         let sprite = Sprite {
             image: asset_server.load(variant.asset_path()),
+            custom_size: Some(Vec2::ONE),
             ..default()
         };
 
-        let transform = Transform::from_translation(position.extend(0.));
+        let transform =
+            Transform::from_translation(position.extend(0.)).with_scale(BRICK_SIZE.extend(1.));
+
         (Brick, sprite, transform, Collider)
     }
 }

@@ -43,21 +43,15 @@ impl WallLocation {
     fn asset_path(&self) -> &str {
         match self {
             Self::Corner(_) => WALL_CORNER_SPRITE_PATH,
+            Self::Top => WALL_TOP_SPRITE_PATH,
             _ => WALL_SPRITE_PATH,
-        }
-    }
-
-    fn rotation(&self) -> Quat {
-        match self {
-            Self::Top => Quat::from_rotation_z(RADIAN_90_DEGREES),
-            _ => Quat::default(),
         }
     }
 
     fn size(&self) -> Vec2 {
         match self {
             Self::Left | Self::Right => Vec2::new(WALL_TILE_SIZE, WALL_LENGTH_VERTICAL),
-            Self::Top => Vec2::new(WALL_TILE_SIZE, WALL_LENGTH_HORIZONTAL),
+            Self::Top => Vec2::new(WALL_LENGTH_HORIZONTAL, WALL_TILE_SIZE),
             _ => Vec2::new(WALL_TILE_SIZE, WALL_TILE_SIZE),
         }
     }
@@ -81,7 +75,7 @@ impl Wall {
         asset_server: &Res<AssetServer>,
     ) -> (Wall, Sprite, Transform) {
         let image_mode = SpriteImageMode::Tiled {
-            tile_x: false,
+            tile_x: true,
             tile_y: true,
             stretch_value: 1.,
         };
@@ -95,7 +89,6 @@ impl Wall {
         };
 
         let transform = Transform::from_translation(location.position().extend(0.))
-            .with_rotation(location.rotation())
             .with_scale(location.size().extend(1.));
 
         (Wall, sprite, transform)

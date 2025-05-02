@@ -23,13 +23,13 @@ pub fn spawn_walls(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Wall::with_collision(WallLocation::Right, &asset_server));
 
     // spawn top-left corner wall
-    commands.spawn(Wall::new(
+    commands.spawn(Wall::with_collision(
         WallLocation::Corner(CornerLocation::TopLeft),
         &asset_server,
     ));
 
     // Spawn top-right corner wall
-    commands.spawn(Wall::new(
+    commands.spawn(Wall::with_collision(
         WallLocation::Corner(CornerLocation::TopRight),
         &asset_server,
     ));

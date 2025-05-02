@@ -87,11 +87,11 @@ pub const WALL_LOCATION_TOP_LEFT_CORNER: Vec2 =
 pub const WALL_LOCATION_TOP_RIGHT_CORNER: Vec2 =
     Vec2::new(WALL_LOCATION_RIGHT.x, SCREEN_TOP - HALF_WALL_TILE);
 
-/// Represents a 90 degrees rotation in radians.
-pub const RADIAN_90_DEGREES: f32 = -PI / 2.;
-
 /// Assets directory path for the wall sprite.
 pub const WALL_SPRITE_PATH: &str = "sprites/wall.png";
+
+/// Assets directory path for the wall-top sprite.
+pub const WALL_TOP_SPRITE_PATH: &str = "sprites/wall-top.png";
 
 /// Assets directory path for the wall-corner sprite.
 pub const WALL_CORNER_SPRITE_PATH: &str = "sprites/wall-corner.png";

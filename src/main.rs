@@ -1,13 +1,15 @@
 mod components;
 mod constants;
+mod events;
 mod resources;
 mod systems;
 
 use bevy::{prelude::*, window::WindowResolution};
 use constants::*;
+use events::CollisionEvent;
 use resources::Keybindings;
 use systems::{
-    fixed_update::{ball_movement, handle_input},
+    fixed_update::{ball_movement, check_for_collisions, handle_input},
     startup::{setup_camera, spawn_ball, spawn_bricks, spawn_paddle, spawn_walls},
 };
 
@@ -30,6 +32,7 @@ fn main() {
         )
         .insert_resource(ClearColor(DMG_COLOR_0))
         .insert_resource(keybindings)
+        .add_event::<CollisionEvent>()
         .add_systems(
             Startup,
             (
@@ -40,7 +43,10 @@ fn main() {
                 spawn_ball,
             ),
         )
-        .add_systems(FixedUpdate, (handle_input, ball_movement).chain())
+        .add_systems(
+            FixedUpdate,
+            (handle_input, ball_movement, check_for_collisions).chain(),
+        )
         .run();
 }
 
